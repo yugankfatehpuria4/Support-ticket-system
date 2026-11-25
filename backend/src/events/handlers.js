@@ -51,7 +51,12 @@ const notifyAdmins = async ({ ticketId, message, eventType, excludeUserId }) => 
   }
 };
 
+let handlersRegistered = false;
+
 const registerEventHandlers = () => {
+  if (handlersRegistered) return;
+  handlersRegistered = true;
+
   eventBus.on(EVENTS.TICKET_CREATED, async (payload) => {
     const { ticket, actor } = payload;
     const message = `Ticket "${ticket.title}" was created`;
